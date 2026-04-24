@@ -14,9 +14,23 @@
 <br><br>
 <input placeholder="Write something..." />
 <button>Post</button>
-  <script>
+<script>
 let provider;
 let signer;
+
+async function connect() {
+  if (!window.ethereum) {
+    document.getElementById("status").innerText = "MetaMask yok";
+    return;
+  }
+
+  await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+  provider = new ethers.providers.Web3Provider(window.ethereum);
+  signer = provider.getSigner();
+
+  document.getElementById("status").innerText = "Wallet connected";
+}
 </script>
 </body>
 </html>
